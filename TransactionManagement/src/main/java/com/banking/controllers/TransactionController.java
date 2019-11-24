@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import com.banking.beans.*;
 @RequestMapping("/api/v1")
 public class TransactionController {
 
+	@Autowired
 	private TransactionRepository transRepo;
 	
 	 @GetMapping("/transactions")
