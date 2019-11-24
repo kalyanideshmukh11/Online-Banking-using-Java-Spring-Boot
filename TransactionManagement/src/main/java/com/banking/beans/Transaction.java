@@ -17,22 +17,17 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class Transaction {
 
-	public Transaction(long accNum, long custId, String transType, String transMedium, String transDesc,
-			double transAmt, String currency, Date createDt, double currentBalance, String status) {
-		super();
-		this.transId = transId;
-		this.accNum = accNum;
-		this.custId = custId;
-		this.transType = transType;
-		this.transMedium = transMedium;
-		this.transDesc = transDesc;
-		this.transAmt = transAmt;
-		this.currency = currency;
-		this.createDt = createDt;
-		this.currentBalance = currentBalance;
-		this.status = status;
-	}
+	/*
+	 * public Transaction(long accNum, String transType, String transMedium, String
+	 * transDesc, double transAmt, String currency, Date createDt, double
+	 * currentBalance, String status) { super(); this.transId = transId; this.accNum
+	 * = accNum; this.transType = transType; this.transMedium = transMedium;
+	 * this.transDesc = transDesc; this.transAmt = transAmt; this.currency =
+	 * currency; this.createDt = createDt; this.currentBalance = currentBalance;
+	 * this.status = status; }
+	 */
 	@Id
+	@Column(name = "trans_id", nullable = false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long transId;
 	public long getTransId() {
@@ -46,12 +41,6 @@ public class Transaction {
 	}
 	public void setAccNum(long accNum) {
 		this.accNum = accNum;
-	}
-	public long getCustId() {
-		return custId;
-	}
-	public void setCustId(long custId) {
-		this.custId = custId;
 	}
 	public String getTransType() {
 		return transType;
@@ -103,11 +92,9 @@ public class Transaction {
 	}
 	@Column(name = "Account_num", nullable = false)
 	private long accNum;
-	@Column(name = "cust_id", nullable = false)
-	private long custId;
 	@Column(name = "trans_type", nullable = false)
 	private String transType;
-	@Column(name = "trans_medsium", nullable = false)
+	@Column(name = "trans_medium", nullable = false)
 	private String transMedium;
 	@Column(name = "trans_desc", nullable = false)
 	private String transDesc;
@@ -119,7 +106,7 @@ public class Transaction {
 	private Date createDt;
 	@Column(name = "balance", nullable = false)
 	private double currentBalance;
-	@Column(name = "status", nullable = false)
+	@Column(name = "trans_status", nullable = false)
 	private String status;
 
 }
