@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.ResourceAccessException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.banking.beans.*;
 
@@ -20,6 +21,7 @@ import com.banking.beans.*;
 @RequestMapping("/api/v1")
 public class TransactionController {
 
+	@Autowired
 	private TransactionRepository transRepo;
 	
 	 @GetMapping("/transactions")
