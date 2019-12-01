@@ -102,6 +102,8 @@ public class Transaction {
 	private double transAmt;
 	@Column(name = "currency", nullable = false)
 	private String currency;
+	@Column(name = "created_by", nullable = false)
+	private String createdName;
 	@Column(name = "create_Dt", nullable = false)
 	private Date createDt;
 	@Column(name = "balance", nullable = false)

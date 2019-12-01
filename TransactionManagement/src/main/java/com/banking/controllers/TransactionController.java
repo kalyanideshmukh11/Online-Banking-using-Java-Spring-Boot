@@ -43,7 +43,7 @@ public class TransactionController {
 	    Transaction transaction =
 	        transRepo
 	            .findById(accNum)
-	            .orElseThrow();
+	            .orElseThrow(null);
 	    return ResponseEntity.ok().body(transaction);
 	  }
 	  
