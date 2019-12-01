@@ -1,5 +1,6 @@
 package com.banking.controllers;
 
+import java.util.Date;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -55,6 +56,18 @@ public class TransactionController {
 	   */
 	  @PostMapping("/addTransaction")
 	  public Transaction createTransaction(@Valid @RequestBody Transaction transaction) {
+		String medium = transaction.getTransMedium(); 
+		if(medium.equals("Manual")) {
+			//admin transaction
+		}
+		else if(medium.equals("Online")) {
+			//user transaction
+			transaction.setStatus("Success");
+		}
+		Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
+		transaction.setCreateDt(today);
+		if(transaction.getCurrency().equals(""))
+			transaction.setCurrency("Dollars");
 	    return transRepo.save(transaction);
 	  }
 
