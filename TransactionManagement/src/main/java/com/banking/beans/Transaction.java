@@ -110,5 +110,13 @@ public class Transaction {
 	private double currentBalance;
 	@Column(name = "trans_status", nullable = false)
 	private String status;
+	@Column(name = "beneficiary")
+	private long beneficiary ;
+	public long getBeneficiary() {
+		return beneficiary;
+	}
+	public void setBeneficiary(long beneficiary) {
+		this.beneficiary = beneficiary;
+	}
 
 }
