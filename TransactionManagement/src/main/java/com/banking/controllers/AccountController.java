@@ -37,12 +37,12 @@ public class AccountController {
 	   * @return the users by id
 	   * @throws ResourceNotFoundException the resource not found exception
 	   */
-	  @GetMapping("/account/{accNum}")
-	  public ResponseEntity<Account> getUsersById(@PathVariable(value = "accNum") Long accNum)
+	  @GetMapping("/account/{account_number}")
+	  public ResponseEntity<Account> getUsersById(@PathVariable(value = "account_number") Long account_number)
 	      throws ResourceAccessException {
 	    Account account =
 	        accountRepo
-	            .findById(accNum)
+	            .findById(account_number)
 	            .orElseThrow(null);
 	    return ResponseEntity.ok().body(account);
 	  }
