@@ -8,7 +8,11 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,10 +20,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @Table(name = "account")
 @EntityListeners(AuditingEntityListener.class)
+@SequenceGenerator(name="seq", initialValue=1103000000, allocationSize=100)
 public class Account {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq")
 	@Column(name = "account_number", nullable = false)
 	private long account_number;
 	 @Column(name = "customer_email", nullable = false)
@@ -30,7 +35,18 @@ public class Account {
 	private String customer_lname;
 	@Column(name = "customer_address", nullable = false)
 	private String customer_address;
-
+	@Column(name = "customer_phone", nullable = false)
+	private long customer_phone;
+	 @Column(name = "account_type", nullable = false)
+	private String account_type;
+	@Column(name = "account_status", nullable = false)
+	private String account_status;
+	 @Column(name = "current_balance", nullable = false)
+	private double current_balance;
+	@Column(name = "user_type", nullable = false)
+	private String user_type;
+	@Column(name = "branch_name", nullable = false)
+	private String branch_name;
 	public long getAccount_number() {
 		return account_number;
 	}
@@ -110,7 +126,7 @@ public class Account {
 	public void setUser_type(String user_type) {
 		this.user_type = user_type;
 	}
-
+  
 	public String getBranch_name() {
 		return branch_name;
 	}
@@ -118,17 +134,5 @@ public class Account {
 	public void setBranch_name(String branch_name) {
 		this.branch_name = branch_name;
 	}
-
-	@Column(name = "customer_phone", nullable = false)
-	private long customer_phone;
-	 @Column(name = "account_type", nullable = false)
-	private String account_type;
-	@Column(name = "account_status", nullable = false)
-	private String account_status;
-	 @Column(name = "current_balance", nullable = false)
-	private double current_balance;
-	@Column(name = "user_type", nullable = false)
-	private String user_type;
-	@Column(name = "branch_name", nullable = false)
-	private String branch_name;
+   
 }
