@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.ResourceAccessException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.banking.beans.*;
 
@@ -31,11 +32,16 @@ public class TransactionController {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	public double getBalance(long accNum) {
-		        double balance= jdbcTemplate
+		double balance = -1.00;
+		try {
+		        balance= jdbcTemplate
 		                .queryForObject("select current_balance from account where account_number = " + accNum, Double.class);
-		        
+		}
+		catch (DataAccessException e) {
+			return -1;
+		}
 		        return balance;
-		    }
+		}
 	@Autowired
 	private TransactionRepository transRepo;
 	
@@ -146,39 +152,105 @@ public class TransactionController {
 	   *
 	   * @param user the user
 	   * @return the user
+	 * @throws CloneNotSupportedException 
 	   */
 	  @PostMapping("/addTransaction")
-	  public List<Transaction> createTransaction(@Valid @RequestBody Transaction transaction) {
-		String medium = transaction.getTransMedium(); 
+	  public ResponseEntity createTransaction(@Valid @RequestBody Transaction transaction) throws CloneNotSupportedException {
+		  //setting default transaction fields
+		  Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
+			transaction.setCreateDt(today);
+			if(transaction.getCurrency().equals(""))
+				transaction.setCurrency("USD");
+		String medium = transaction.getTransMedium();
 		List<Transaction> transactions = new ArrayList<Transaction>();
 		if(medium.equals("Manual")) {
 			//admin transaction
 		}
 		else if(medium.equals("Online")) {
 			//user transaction
+			transaction.setTransType("Debit");
+			transaction.setTransAmt(-transaction.getTransAmt());  //negative balance shown in transaction for debit
 			double oldBalance = this.getBalance(transaction.getAccNum());
-			if(oldBalance >= transaction.getTransAmt())
-			{
-				double newBalance = oldBalance - transaction.getTransAmt();
-				this.updateBalance(newBalance , transaction.getAccNum());
-				
+			transaction.setCurrentBalance(oldBalance);
+			if(oldBalance == -1.00) {
+				transaction.setStatus("Failed");
+				transactions.add(transaction);
+				transRepo.saveAll(transactions);
+				return ResponseEntity.ok().body("Payee account number does not exist, transaction failed");
 			}
-			transaction.setStatus("Success");
-			transactions.add(transaction);
+			if(oldBalance >= -transaction.getTransAmt()){
+				double newBalance = oldBalance + transaction.getTransAmt(); //adding instead of subtracting because transaction amount is negative
+				if(transaction.getBeneficiary() == 99999999) {	//external payments
+					if(!this.updateBalance(newBalance , transaction.getAccNum())) {
+						transaction.setStatus("Failed");
+						transactions.add(transaction);
+						transRepo.saveAll(transactions);
+						return ResponseEntity.ok().body("Payee balance could not be updated, transaction failed");
+					}
+					transaction.setCurrentBalance(newBalance);
+					transaction.setStatus("Success");
+					transactions.add(transaction);
+				}else {
+					double oldBenBalance = this.getBalance(transaction.getBeneficiary());
+					if(oldBenBalance == -1.00)
+						return ResponseEntity.ok().body("Beneficiary account number does not exist, transaction failed");
+					double newBenBalance = oldBenBalance - transaction.getTransAmt();	//subtracting instead of adding because transaction amount is negative
+					if(!this.updateBalance(newBalance , transaction.getAccNum())) {
+						transaction.setStatus("Failed");
+						transactions.add(transaction);
+						transRepo.saveAll(transactions);
+						return ResponseEntity.ok().body("Payee balance could not be updated, transaction failed");
+					}
+					transaction.setCurrentBalance(newBalance);
+					transaction.setStatus("Success");
+					transactions.add(transaction);
+					Transaction benTransaction = new Transaction();
+					setValues(benTransaction, transaction);
+					benTransaction.setCurrentBalance(oldBenBalance);
+					if(!this.updateBalance(newBenBalance , transaction.getAccNum())) {
+						benTransaction.setStatus("Failed");
+						transactions.add(benTransaction);
+						transRepo.saveAll(transactions);
+						return ResponseEntity.ok().body("Beneficiary balance could not be updated, transaction failed");
+					}
+					benTransaction.setCurrentBalance(newBenBalance);
+					benTransaction.setStatus("Success");
+					benTransaction.setTransAmt(-transaction.getTransAmt());  //turning balance to positive for beneficiary
+					transactions.add(benTransaction);
+					}
+				
+			}else {
+				transaction.setStatus("Failed");
+				transactions.add(transaction);
+				transRepo.saveAll(transactions);
+				return ResponseEntity.ok().body("Payee does not have sufficient balance, transaction failed");
+			}
 		}
-		Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
-		transaction.setCreateDt(today);
-		if(transaction.getCurrency().equals(""))
-			transaction.setCurrency("Dollars");
-	    return transRepo.saveAll(transactions);
+	    return ResponseEntity.ok().body(transRepo.saveAll(transactions));
 	    
 	  }
+	  
+	  private void setValues(Transaction A, Transaction B) {
+			A.setAccNum(B.getBeneficiary());
+			A.setCreatedName(B.getCreatedName());
+			A.setCreateDt(B.getCreateDt());
+			A.setCurrency(B.getCurrency());
+			A.setTransType("Credit");
+			A.setTransDesc(B.getTransDesc());
+			A.setStatus(B.getStatus());
+			A.setTransId(B.getTransId()+1);
+			A.setTransMedium(B.getTransMedium());			
+		}
 
-	private void updateBalance(double newBalance , long accNum) {
+	private boolean updateBalance(double newBalance , long accNum) {
 		// TODO Auto-generated method stub
+		try {
 		jdbcTemplate.update("update account set current_balance = "+newBalance+" where account_number="+accNum);
-		
-		
+		}
+		catch (DataAccessException e) {
+			return false;
+		}
+		return true;	
 	}
 
 }
