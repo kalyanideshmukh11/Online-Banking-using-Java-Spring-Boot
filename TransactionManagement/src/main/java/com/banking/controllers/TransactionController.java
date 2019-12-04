@@ -9,11 +9,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,13 +22,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.banking.beans.*;
 
 @RestController
 @RequestMapping("/api/v1")
 public class TransactionController {
-
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	public double getBalance(long accNum) {
+		        double balance= jdbcTemplate
+		                .queryForObject("select current_balance from account where account_number = " + accNum, Double.class);
+		        
+		        return balance;
+		    }
 	@Autowired
 	private TransactionRepository transRepo;
 	
@@ -150,7 +156,15 @@ public class TransactionController {
 		}
 		else if(medium.equals("Online")) {
 			//user transaction
+			double oldBalance = this.getBalance(transaction.getAccNum());
+			if(oldBalance >= transaction.getTransAmt())
+			{
+				double newBalance = oldBalance - transaction.getTransAmt();
+				this.updateBalance(newBalance , transaction.getAccNum());
+				
+			}
 			transaction.setStatus("Success");
+			transactions.add(transaction);
 		}
 		Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
 		transaction.setCreateDt(today);
@@ -159,5 +173,12 @@ public class TransactionController {
 	    return transRepo.saveAll(transactions);
 	    
 	  }
+
+	private void updateBalance(double newBalance , long accNum) {
+		// TODO Auto-generated method stub
+		jdbcTemplate.update("update account set current_balance = "+newBalance+" where account_number="+accNum);
+		
+		
+	}
 
 }

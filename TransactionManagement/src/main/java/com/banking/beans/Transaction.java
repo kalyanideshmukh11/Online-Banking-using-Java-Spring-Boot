@@ -104,6 +104,12 @@ public class Transaction {
 	private String currency;
 	@Column(name = "created_by", nullable = false)
 	private String createdName;
+	public String getCreatedName() {
+		return createdName;
+	}
+	public void setCreatedName(String createdName) {
+		this.createdName = createdName;
+	}
 	@Column(name = "create_Dt", nullable = false)
 	private Date createDt;
 	@Column(name = "balance", nullable = false)
