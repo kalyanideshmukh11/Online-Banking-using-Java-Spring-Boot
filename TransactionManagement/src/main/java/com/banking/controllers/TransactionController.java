@@ -190,24 +190,24 @@ public class TransactionController {
 					transaction.setCurrentBalance(newBalance);
 					transaction.setStatus("Success");
 					transactions.add(transaction);
-				}else {
+				}else {				//internal payments
 					double oldBenBalance = this.getBalance(transaction.getBeneficiary());
 					if(oldBenBalance == -1.00)
 						return ResponseEntity.ok().body("Beneficiary account number does not exist, transaction failed");
-					double newBenBalance = oldBenBalance - transaction.getTransAmt();	//subtracting instead of adding because transaction amount is negative
 					if(!this.updateBalance(newBalance , transaction.getAccNum())) {
 						transaction.setStatus("Failed");
 						transactions.add(transaction);
 						transRepo.saveAll(transactions);
 						return ResponseEntity.ok().body("Payee balance could not be updated, transaction failed");
 					}
+					double newBenBalance = oldBenBalance - transaction.getTransAmt();	//subtracting instead of adding because transaction amount is negative
 					transaction.setCurrentBalance(newBalance);
 					transaction.setStatus("Success");
 					transactions.add(transaction);
 					Transaction benTransaction = new Transaction();
 					setValues(benTransaction, transaction);
 					benTransaction.setCurrentBalance(oldBenBalance);
-					if(!this.updateBalance(newBenBalance , transaction.getAccNum())) {
+					if(!this.updateBalance(newBenBalance , benTransaction.getAccNum())) {
 						benTransaction.setStatus("Failed");
 						transactions.add(benTransaction);
 						transRepo.saveAll(transactions);
