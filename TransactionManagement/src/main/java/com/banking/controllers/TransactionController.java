@@ -130,13 +130,9 @@ public class TransactionController {
 			}catch (DateTimeParseException e)
 		  {
 				return ResponseEntity.ok().body("Please enter date in yyyy-mm-dd format.");
-		  }
-		    
-		  
-		  
+		  }	  
 		  return ResponseEntity.ok().body(filteredByType);
-		  
-		 
+ 
 	  }
 	  
 	  /**
