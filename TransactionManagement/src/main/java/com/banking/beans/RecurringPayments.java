@@ -68,6 +68,25 @@ public class RecurringPayments {
 	public void setBeneficiary(long beneficiary) {
 		this.beneficiary = beneficiary;
 	}
+	public long getRecurFreq() {
+		return recur_freq;
+	}
+	public void setRecurFreq(long recur_freq) {
+		this.recur_freq = recur_freq;
+	}
+	public long getStart_date() {
+		return start_date;
+	}
+	public void setStart_date(long start_date) {
+		this.start_date = start_date;
+	}
+	public long getEnd_date() {
+		return end_date;
+	}
+	public void setEnd_date(long end_date) {
+		this.end_date = end_date;
+	}
+
 	
 	@Column(name = "account_number", nullable = false)
 	private long accNum;
