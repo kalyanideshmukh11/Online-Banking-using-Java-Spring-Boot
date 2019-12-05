@@ -74,16 +74,16 @@ public class RecurringPayments {
 	public void setRecurFreq(long recur_freq) {
 		this.recur_freq = recur_freq;
 	}
-	public long getStart_date() {
+	public Date getStart_date() {
 		return start_date;
 	}
-	public void setStart_date(long start_date) {
+	public void setStart_date(Date start_date) {
 		this.start_date = start_date;
 	}
-	public long getEnd_date() {
+	public Date getEnd_date() {
 		return end_date;
 	}
-	public void setEnd_date(long end_date) {
+	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
 
@@ -96,16 +96,16 @@ public class RecurringPayments {
 	private double paymentAmt;
 	@Column(name = "currency", nullable = false)
 	private String currency;
-	@Column(name = "create_Dt", nullable = false)
+	@Column(name = "create_Dt")
 	private Date createDt;
-	@Column(name = "trans_status", nullable = false)
+	@Column(name = "trans_status")
 	private String status;
 	@Column(name = "beneficiary")
 	private long beneficiary ;
-	@Column(name = "start_date")
-	private long start_date ;
-	@Column(name = "end_date")
-	private long end_date ;
+	@Column(name = "start_date", nullable = false)
+	private Date start_date ;
+	@Column(name = "end_date", nullable = false)
+	private Date end_date ;
 	@Column(name = "recur_freq")
 	private long recur_freq ;
 	

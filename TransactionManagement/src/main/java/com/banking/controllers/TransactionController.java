@@ -165,6 +165,24 @@ public class TransactionController {
 		List<Transaction> transactions = new ArrayList<Transaction>();
 		if(medium.equals("Manual")) {
 			//admin transaction
+			transaction.setCreatedName("Banker");
+			double oBalance = this.getBalance(transaction.getAccNum());
+			transaction.setCurrentBalance(oBalance);
+			if(oBalance == -1.00) {
+				transaction.setStatus("Failed");
+				transactions.add(transaction);
+				transRepo.saveAll(transactions);
+				return ResponseEntity.ok().body("User's account number does not exist, transaction failed");
+			}
+			if(!this.updateBalance(oBalance + transaction.getTransAmt() , transaction.getAccNum())) {
+				transaction.setStatus("Failed");
+				transactions.add(transaction);
+				transRepo.saveAll(transactions);
+				return ResponseEntity.ok().body("User's balance could not be updated, transaction failed");
+			}
+			transaction.setCurrentBalance(oBalance + transaction.getTransAmt());
+			transaction.setStatus("Success");
+			transactions.add(transaction);
 		}
 		else if(medium.equals("Online")) {
 			//user transaction
@@ -180,7 +198,7 @@ public class TransactionController {
 			}
 			if(oldBalance >= -transaction.getTransAmt()){
 				double newBalance = oldBalance + transaction.getTransAmt(); //adding instead of subtracting because transaction amount is negative
-				if(transaction.getBeneficiary() == 99999999) {	//external payments
+				if(transaction.getBeneficiary() == 0) {	//external payments
 					if(!this.updateBalance(newBalance , transaction.getAccNum())) {
 						transaction.setStatus("Failed");
 						transactions.add(transaction);
