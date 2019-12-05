@@ -19,6 +19,13 @@ Auto scaling automatically monitors and adjusts resources allocation to provide 
 This step will let us ensure that we have the optimum number of EC2 instances available to handle the load of the banking system.  
 <img src="https://user-images.githubusercontent.com/38210397/70234463-90d74300-1715-11ea-860c-5d8ee455c4a8.PNG" width="300" height="250">  
 
+### AWS Load Balancer
+AWS offers 3 types of load balancers , among which Application Load balancers works more efficiently with Amazon ECS services.
+AWS load balancer offers a single point of contact for clients. It distributes the incoming traffic across multiple availability zones, leading to easier load balancing and increasing the availability of an application.
+In the implemented solution, the auto scaling group is destined target for the load balancer.The integrated Elastic Load balancing handles the increased workload without disrupting the overall flow.
+Currently, we are using Fargate launch type for the tasks as it provides efficient service in lower price.
+One of the advantage of Application Load Balancer is the support for Path based routing and priority rules .This allows multiple services to use same listener port on a single application load balancer.
+
 ## Feature Set
 * Add a new account to the system.
 * Remove existing accounts (only if there is no balance in the account)
