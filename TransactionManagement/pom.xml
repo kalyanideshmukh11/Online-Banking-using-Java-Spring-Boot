@@ -74,5 +74,55 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<profiles>
+   <profile>
+      <activation>
+         <property>
+            <name>docker</name>
+         </property>
+      </activation>
+      <build>
+         <plugins>
+            <plugin>
+               <groupId>io.fabric8</groupId>
+               <artifactId>docker-maven-plugin</artifactId>
+               <version>0.31.0</version>
+               <extensions>true</extensions>
+               <configuration>
+                  <verbose>true</verbose>
+                  <images>
+                     <image>
+                        <name>banking</name>
+                        <build>
+                           <from>java:8-jdk-alpine</from>
+                           <entryPoint>
+                              <exec>
+                                 <args>java</args>
+                                 <args>-jar</args>
+                                 <args>/maven/${project.artifactId}-${project.version}.jar</args>
+                              </exec>
+                           </entryPoint>
+                           <assembly>
+                              <descriptorRef>artifact</descriptorRef>
+                           </assembly>
+                        </build>
+                     </image>
+                  </images>
+               </configuration>
+               <executions>
+                  <execution>
+                     <id>build</id>
+                     <phase>post-integration-test</phase>
+                     <goals>
+                        <goal>build</goal>
+                     </goals>
+                  </execution>
+               </executions>
+            </plugin>
+         </plugins>
+      </build>
+   </profile>
+</profiles>
 
 </project>
