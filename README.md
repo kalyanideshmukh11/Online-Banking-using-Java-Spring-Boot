@@ -42,6 +42,31 @@ Combined with communication, simplicity, and concrete feedback, courage becomes 
 *	Everyone respects each other as a valued team member.
 *	Everyone contributes value such as enthusiasm.
 
+## Agile Methodology- 
+Agile is an empirical process which enables continuous learning and adapting to a process to unwind complex problems. Uncovering better ways of developing software by using this method will create a lot of value for the developer.
+Team worked on the Agile Method which is an approach to project management utilized in software development. 
+Sprint duration- 1 week
+Status call- everyday zoom call
+
+## Testing Methodologies:
+### Non-functional Testing
+Four stages of nonfunctional testing: vulnerability, compatibility, usability and performance.
+#### Compatibility Testing :
+Compatibility testing involves verifying that an application is fully compatible with the hardware and software it will run on.
+#### Usability Testing :
+Usability testing involves testing that the application is easy to use and intuitive. 
+#### Performance Testing :
+Performance testing involves verifying that the application performs well in a variety of situations that could affect users, from heavy load to limited battery power. 
+
+### Functional Testing
+Functional testing involves testing an app to ensure it operates properly. The goal of this type of QA testing is to verify that the app works as it should.
+#### Unit Testing :
+The goal of this stage of testing is to test each unit in isolation without looking at its role within the application as a whole.
+#### Integration Testing :
+Integration testing involves testing multiple units together to see how they perform functions as a whole. Unlike unit testing, which focuses on one unit in isolation, integration testing is all about seeing how units work together to complete functions.
+#### System Testing :
+ A typical system test involves running the entire system in order to discover previously unnoticed bugs, stability issues and major problems.
+
 
 ### Authors 
 Vanditt Sama (014210521)  
