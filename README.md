@@ -8,16 +8,17 @@ Using the spring framework for our application allowed us to set up Java applica
 The configuration required to get the application running was minimal as a result.  
 The added support for data access frameworks like hibernate and JDBC allowed us to easily integrate database transactions into our application.
 
-### MySQL Database hosted on Amazon S3
+### MySQL Database hosted on Amazon RDS
 For an application heaviliy dependant on integrity of data like the online banking system, a relational database was found to be a more reliable option to maintain data consistency and ease of monitoring data.
-The database instance was hosted on Amazon's S3 cloud storage during development. This approach provided two advantages:  
+The database instance is hosted on Amazon RDS. This approach provided two advantages:  
 1. All team members could perform development testing in sync.
-2. No need to re-deploy database instance
+2. No need to re-deploy database instance.
 
-### Amazon AWS Auto Scaled EC2 Cluster
+### Amazon AWS Auto Scaled EC2 Cluster (Extra Credit)
 Auto scaling automatically monitors and adjusts resources allocation to provide reliable perfonmance of applications hosted on AWS under variable workloads.
 This step will let us ensure that we have the optimum number of EC2 instances available to handle the load of the banking system.  
 <img src="https://user-images.githubusercontent.com/38210397/70234463-90d74300-1715-11ea-860c-5d8ee455c4a8.PNG" width="300" height="250">  
+
 
 ### AWS Load Balancer
 AWS offers 3 types of load balancers , among which Application Load balancers work more efficiently with Amazon ECS services.
@@ -25,6 +26,10 @@ AWS load balancer offers a single point of contact for clients. It distributes t
 In the implemented solution, the auto scaling group is destined target for the load balancer.The integrated Elastic Load balancing handles the increased workload without disrupting the overall flow.
 Currently, we are using Fargate launch type for the tasks as it provides efficient service in lower price.
 One of the advantage of Application Load Balancer is the support for Path based routing and priority rules .This allows multiple services to use same listener port on a single application load balancer.
+
+### Deployed as Docker Container (Extra Credit)
+The springboot application was deployed on Amazon Fargate using docker image. AWS Fargate is a serverless compute engine for containers that works with both Amazon Elastic Container Service (ECS) and Amazon Elastic Kubernetes Service (EKS). Fargate makes it easy for you to focus on building your applications. Fargate removes the need to provision and manage servers, lets you specify and pay for resources per application, and improves security through application isolation by design.
+
 
 ## Feature Set
 * Add a new account to the system.
