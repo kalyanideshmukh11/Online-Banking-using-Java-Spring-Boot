@@ -228,10 +228,13 @@ The goal of this stage of testing is to test each unit in isolation without look
 Integration testing involves testing multiple units together to see how they perform functions as a whole. Unlike unit testing, which focuses on one unit in isolation, integration testing is all about seeing how units work together to complete functions.
 #### System Testing :
  A typical system test involves running the entire system in order to discover previously unnoticed bugs, stability issues and major problems.
+ 
+ ## Team Burndown Chart  
+![image](https://user-images.githubusercontent.com/38210397/70285642-0c200f80-177d-11ea-9544-218319f991c9.png)
 
 
 ### Authors 
-Vanditt Sama (014210521)  
-Namrata Deshmukh  
-Mukesh Mogal  
-Kalyani Deshmukh  
+Vanditt Sama (SJSU ID: 014210521)  
+Namrata Deshmukh (SJSU ID: 014534156) 
+Mukesh Mogal  (SJSU ID: 014529112)
+Kalyani Deshmukh  (SJSU ID: 011414663)
