@@ -48,7 +48,7 @@ The springboot application was deployed on Amazon Fargate using docker image. AW
 ## UI Wireframe
 ![Alt text]( https://github.com/gopinathsjsu/team-project-knvm/blob/master/Diagrams/account_creation.png "Account Creation")
 ![Alt text]( https://github.com/gopinathsjsu/team-project-knvm/blob/master/Diagrams/transaction_creation.png "Transaction Creation")
-![Alt text]( https://github.com/gopinathsjsu/team-project-knvm/blob/master/Diagrams/Transaction%20Filters.png "Transaction Filters")
+![Alt text]( https://github.com/gopinathsjsu/team-project-knvm/blob/master/Diagrams/transaction_filter.png "Transaction Filters")
 ![Alt text]( https://github.com/gopinathsjsu/team-project-knvm/blob/master/Diagrams/transaction_summary1.png "Transaction Summary")
 
 ## Weekly Scrum Report
