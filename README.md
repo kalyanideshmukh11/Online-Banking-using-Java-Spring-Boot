@@ -234,7 +234,7 @@ Integration testing involves testing multiple units together to see how they per
 
 
 ### Authors 
-Vanditt Sama (SJSU ID: 014210521)  
-Namrata Deshmukh (SJSU ID: 014534156) 
-Mukesh Mogal  (SJSU ID: 014529112)
-Kalyani Deshmukh  (SJSU ID: 011414663)
+Vanditt Sama (SJSU ID: 014210521)    
+Namrata Deshmukh (SJSU ID: 014534156)   
+Mukesh Mogal  (SJSU ID: 014529112)  
+Kalyani Deshmukh  (SJSU ID: 011414663)  
