@@ -30,6 +30,8 @@ One of the advantage of Application Load Balancer is the support for Path based 
 ### Deployed as Docker Container (Extra Credit)
 The springboot application was deployed on Amazon Fargate using docker image. AWS Fargate is a serverless compute engine for containers that works with both Amazon Elastic Container Service (ECS) and Amazon Elastic Kubernetes Service (EKS). Fargate makes it easy for you to focus on building your applications. Fargate removes the need to provision and manage servers, lets you specify and pay for resources per application, and improves security through application isolation by design.
 
+<img width="649" alt="Fargate_arch" src="https://user-images.githubusercontent.com/34641662/70285218-a0897280-177b-11ea-8982-aaf99c1d0cda.png">
+
 
 ## Feature Set
 * Add a new account to the system.
