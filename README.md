@@ -44,6 +44,13 @@ The springboot application was deployed on Amazon Fargate using docker image. AW
 * Appropriate validations during a transaction are included.
 ## Architecture Diagram
 ![Untitled Document (9)](https://user-images.githubusercontent.com/31982121/70280348-1fc37a00-176d-11ea-8d72-36ab5edb2a87.jpg)
+
+## UI Wireframe
+![Alt text]( https://github.com/gopinathsjsu/team-project-knvm/blob/master/Diagrams/account_creation.png "Account Creation")
+![Alt text]( https://github.com/gopinathsjsu/team-project-knvm/blob/master/Diagrams/transaction_creation.png "Transaction Creation")
+![Alt text]( https://github.com/gopinathsjsu/team-project-knvm/blob/master/Diagrams/Transaction%20Filters.png "Transaction Filters")
+![Alt text]( https://github.com/gopinathsjsu/team-project-knvm/blob/master/Diagrams/transaction_summary1.png "Transaction Summary")
+
 ## Weekly Scrum Report
 > ### Week 1 (11/02/2019 – 11/08/2019)
 #### Kalyani Deshmukh
